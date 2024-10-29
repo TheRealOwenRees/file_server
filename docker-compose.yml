@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fileserver
+    environment:
+      - MIX_ENV=prod
+    ports:
+      - "4321:4321"
+    volumes:
+      - appdata:/file_server
+
+volumes:
+  appdata:
