@@ -6,8 +6,20 @@ defmodule FileServer.PlantId do
     response = HTTPoison.get!(url)
 
     case response.status_code do
-      200 -> FileServer.File.save_file(response.body, @upload_directory)
+      200 -> save_image(response.body)
       _ -> {:error, response.status_code}
+    end
+  end
+
+  def save_image(data) do
+    case FileServer.File.detect_mime_type(data) do
+      "image/webp" -> FileServer.File.save_file(data, @upload_directory)
+      "image/jpeg" -> FileServer.File.save_file(data, @upload_directory)
+      "image/png" -> FileServer.File.save_file(data, @upload_directory)
+      "image/gif" -> FileServer.File.save_file(data, @upload_directory)
+      "image/bmp" -> FileServer.File.save_file(data, @upload_directory)
+      "image/tiff" -> FileServer.File.save_file(data, @upload_directory)
+      _ -> {:error, "Unsupported file type"}
     end
   end
 

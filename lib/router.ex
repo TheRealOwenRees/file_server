@@ -1,6 +1,8 @@
 defmodule FileServer.Router do
   use Plug.Router
 
+  @authorization_key Application.compile_env(:file_server, :fileserver_auth_key)
+
   plug(:match)
   plug(:dispatch)
 
@@ -14,7 +16,18 @@ defmodule FileServer.Router do
   end
 
   post "/plant_id" do
-    [url] = Plug.Conn.get_req_header(conn, "url")
+    url = Plug.Conn.get_req_header(conn, "url") |> List.first()
+    authorization = Plug.Conn.get_req_header(conn, "authorization") |> List.first()
+
+    if is_nil(url) or is_nil(authorization) do
+      conn
+      |> send_resp(400, "Bad Request: Missing required headers")
+    end
+
+    if authorization != @authorization_key do
+      conn
+      |> send_resp(401, "Unauthorized")
+    end
 
     response =
       url
@@ -26,8 +39,9 @@ defmodule FileServer.Router do
         |> put_resp_content_type("application/json")
         |> send_resp(201, Jason.encode!(%{filename: filename}))
 
-      _ ->
-        conn |> send_resp(404, "Image not found")
+      {:error, message} ->
+        conn
+        |> send_resp(500, message)
     end
   end
 

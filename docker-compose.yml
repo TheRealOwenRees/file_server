@@ -6,6 +6,7 @@ services:
     container_name: fileserver
     environment:
       - MIX_ENV=prod
+      - FILESERVER_AUTH_KEY=${FILESERVER_AUTH_KEY}
     ports:
       - "4321:4321"
     volumes:

@@ -3,15 +3,15 @@ defmodule FileServer.File do
   File utilities
   """
 
-  defp detect_mime_type(<<0x52, 0x49, 0x46, 0x46, _::binary>>), do: "image/webp"
-  defp detect_mime_type(<<0xFF, 0xD8, 0xFF, _::binary>>), do: "image/jpeg"
-  defp detect_mime_type(<<0x89, 0x50, 0x4E, 0x47, _::binary>>), do: "image/png"
-  defp detect_mime_type(<<0x47, 0x49, 0x46, 0x38, _::binary>>), do: "image/gif"
-  defp detect_mime_type(<<0x42, 0x4D, _::binary>>), do: "image/bmp"
-  defp detect_mime_type(<<0x49, 0x49, 0x2A, 0x00, _::binary>>), do: "image/tiff"
-  defp detect_mime_type(<<0x25, 0x50, 0x44, 0x46, _::binary>>), do: "application/pdf"
-  defp detect_mime_type(<<0x4D, 0x5A, _::binary>>), do: "application/exe"
-  defp detect_mime_type(_), do: "unknown"
+  def detect_mime_type(<<0x52, 0x49, 0x46, 0x46, _::binary>>), do: "image/webp"
+  def detect_mime_type(<<0xFF, 0xD8, 0xFF, _::binary>>), do: "image/jpeg"
+  def detect_mime_type(<<0x89, 0x50, 0x4E, 0x47, _::binary>>), do: "image/png"
+  def detect_mime_type(<<0x47, 0x49, 0x46, 0x38, _::binary>>), do: "image/gif"
+  def detect_mime_type(<<0x42, 0x4D, _::binary>>), do: "image/bmp"
+  def detect_mime_type(<<0x49, 0x49, 0x2A, 0x00, _::binary>>), do: "image/tiff"
+  def detect_mime_type(<<0x25, 0x50, 0x44, 0x46, _::binary>>), do: "application/pdf"
+  def detect_mime_type(<<0x4D, 0x5A, _::binary>>), do: "application/exe"
+  def detect_mime_type(_), do: "unknown"
 
   defp mime_type_to_extension("image/webp"), do: "webp"
   defp mime_type_to_extension("image/jpeg"), do: "jpg"
@@ -47,10 +47,5 @@ defmodule FileServer.File do
   def delete_file(path), do: File.rm(path)
 
   @spec file_exists?(Path.t()) :: boolean()
-  def file_exists?(path) do
-    case File.stat(path) do
-      {:ok, _} -> true
-      _ -> false
-    end
-  end
+  def file_exists?(path), do: File.exists?(path)
 end
