@@ -28,5 +28,8 @@ elixir_file_server-*.tar
 # Ignore environment variable files
 .env*
 
+# Uploaded files
+priv/static/*
+
 # Misc
 todo.*

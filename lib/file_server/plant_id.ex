@@ -15,14 +15,17 @@ defmodule FileServer.PlantId do
     end
   end
 
+  @spec save_image(binary()) :: {:ok, String.t()} | {:error, String.t()}
   def save_image(data) do
     case FileServer.File.detect_mime_type(data) do
+      # change to {:ok, "image/jpeg"} instead etc etc
       "image/jpeg" -> data |> FileServer.File.save_file(@upload_directory)
       "image/webp" -> convert_image_to_jpg(data) |> FileServer.File.save_file(@upload_directory)
       "image/png" -> convert_image_to_jpg(data) |> FileServer.File.save_file(@upload_directory)
       "image/gif" -> convert_image_to_jpg(data) |> FileServer.File.save_file(@upload_directory)
       "image/bmp" -> convert_image_to_jpg(data) |> FileServer.File.save_file(@upload_directory)
       "image/tiff" -> convert_image_to_jpg(data) |> FileServer.File.save_file(@upload_directory)
+      # {:error, _} -> {:error, "Unsupported file type"}
       _ -> {:error, "Unsupported file type"}
     end
   end

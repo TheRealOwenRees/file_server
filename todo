@@ -1,2 +1,2 @@
-- return errors for unknown file types (HEIC and non image)
-- remove IO.inspect
+- return errors for unknown file types (HEIC and non images)
+- @doc
