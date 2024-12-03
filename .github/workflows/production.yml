@@ -30,5 +30,7 @@ jobs:
           script: |
             cd /home/${{ secrets.USERNAME }}/file_server
             git pull
-            docker compose down
-            docker compose up --build -d
+            mix deps.get
+            mix compile
+            MIX_ENV=prod mix release
+            _build/prod/rel/file_server/bin/file_server start
