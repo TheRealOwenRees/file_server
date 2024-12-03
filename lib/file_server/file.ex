@@ -43,6 +43,9 @@ defmodule FileServer.File do
     end
   end
 
+  @spec get_file(Path.t()) :: {:ok, binary()} | {:error, atom()}
+  def get_file(path), do: File.read(path)
+
   @spec delete_file(Path.t()) :: :ok | {:error, atom()}
   def delete_file(path), do: File.rm(path)
 

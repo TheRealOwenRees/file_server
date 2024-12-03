@@ -45,6 +45,23 @@ defmodule FileServer.Router do
     end
   end
 
+  get "/plant_id/:file" do
+    file = conn.params["file"]
+
+    response = FileServer.PlantId.load_image(file)
+
+    case response do
+      {:ok, data} ->
+        conn
+        |> put_resp_content_type(FileServer.File.detect_mime_type(data))
+        |> send_resp(200, data)
+
+      {:error, _} ->
+        conn
+        |> send_resp(404, "File not found")
+    end
+  end
+
   delete "/plant_id/:file" do
     response =
       conn.params["file"]

@@ -23,6 +23,11 @@ defmodule FileServer.PlantId do
     end
   end
 
+  def load_image(filename) do
+    Path.join(@upload_directory, filename)
+    |> FileServer.File.get_file()
+  end
+
   def delete_image(filename) do
     Path.join(@upload_directory, filename)
     |> FileServer.File.delete_file()
