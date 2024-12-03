@@ -28,7 +28,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home${{ secrets.USERNAME }}/file_server
+            cd /home/${{ secrets.USERNAME }}/file_server
             git pull
             docker compose down
             docker compose up --build -d
