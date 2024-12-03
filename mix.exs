@@ -24,7 +24,8 @@ defmodule FileServer.MixProject do
     [
       {:plug_cowboy, "~> 2.7"},
       {:httpoison, "~> 2.2"},
-      {:jason, "~> 1.4"}
+      {:jason, "~> 1.4"},
+      {:image, "~> 0.54"}
     ]
   end
 end
