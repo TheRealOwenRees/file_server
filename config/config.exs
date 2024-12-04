@@ -6,3 +6,7 @@ if config_env() in [:dev, :test] do
     if File.exists?(path), do: import_config(path)
   end
 end
+
+config :file_server,
+  port: 4321,
+  fileserver_auth_key: nil
