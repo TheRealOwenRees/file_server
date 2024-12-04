@@ -49,10 +49,10 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /home/${{ secrets.USERNAME }}/file_server
-            rm -f release.tar.gz
             tar -xzf release.tar.gz
             rm -rf old_release
             mv current_release old_release || true
             mv file_server current_release
             current_release/bin/file_server stop || true
             current_release/bin/file_server daemon
+            rm -f release.tar.gz
