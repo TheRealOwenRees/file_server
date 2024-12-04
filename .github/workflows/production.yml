@@ -38,7 +38,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           source: release.tar.gz
-          target: /home/${{ secrets.USERNAME }}/file_server/release.tar.gz
+          target: /home/${{ secrets.USERNAME }}/file_server/
 
       - name: Deploy release
         uses: appleboy/ssh-action@master
