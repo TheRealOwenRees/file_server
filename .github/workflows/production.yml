@@ -17,20 +17,52 @@ jobs:
         with:
           otp-version: "26"
           elixir-version: "1.16.2"
-      - run: mix deps.get
-      - run: mix test
 
-      - name: Deploy to production
-        uses: appleboy/ssh-action@master
+      - name: Install dependencies
+        run: mix deps.get
+
+      - name: Run tests
+        run: mix test
+
+      - name: Build release
+        run: MIX_ENV=prod mix release
+
+      - name: Compress build
+        run: tar -czf release.tar.gz -C _build/prod/rel file_server
+
+      - name: Upload release to server
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
-          script: |
-            cd /home/${{ secrets.USERNAME }}/file_server
-            git pull
-            mix deps.get
-            mix compile
-            MIX_ENV=prod mix release
-            _build/prod/rel/file_server/bin/file_server start
+          source: release.tar.gz
+          target: /home/${{ secrets.USERNAME }}/file_server/release.tar.gz
+
+    #   - name: Checkout code
+    #     uses: actions/checkout@v4
+
+    #   - name: Setup Elixir
+    #     uses: erlef/setup-beam@v1
+    #     with:
+    #       otp-version: "26"
+    #       elixir-version: "1.16.2"
+    #   - run: mix deps.get
+    #   - run: mix test
+
+    #   - name: Deploy to production
+    #     uses: appleboy/ssh-action@master
+    #     with:
+    #       host: ${{ secrets.HOST }}
+    #       username: ${{ secrets.USERNAME }}
+    #       key: ${{ secrets.SSH_KEY }}
+    #       port: ${{ secrets.PORT }}
+    #       script: |
+    #         cd /home/${{ secrets.USERNAME }}/file_server
+    #         _build/prod/rel/file_server/bin/file_server stop
+    #         git pull
+    #         mix deps.get
+    #         mix compile
+    #         MIX_ENV=prod mix release
+    #         _build/prod/rel/file_server/bin/file_server daemon
