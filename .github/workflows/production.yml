@@ -25,6 +25,8 @@ jobs:
         run: mix test
 
       - name: Build release
+        env:
+          FILESERVER_AUTH_KEY: ${{ secrets.FILESERVER_AUTH_KEY }}
         run: MIX_ENV=prod mix release
 
       - name: Compress build
