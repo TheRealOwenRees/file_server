@@ -33,7 +33,7 @@ jobs:
         run: tar -czf release.tar.gz -C _build/prod/rel file_server
 
       - name: Upload release to server
-        uses: appleboy/scp-action@0.1.7
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
@@ -43,7 +43,7 @@ jobs:
           target: /home/${{ secrets.USERNAME }}/file_server/
 
       - name: Deploy release
-        uses: appleboy/ssh-action@1.2.0
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
