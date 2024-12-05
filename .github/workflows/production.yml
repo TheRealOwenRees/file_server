@@ -24,6 +24,9 @@ jobs:
       - name: Run tests
         run: mix test
 
+      - name: Clean build
+        run: MIX_ENV=prod mix clean --deps
+
       - name: Build release
         env:
           FILESERVER_AUTH_KEY: ${{ secrets.FILESERVER_AUTH_KEY }}
