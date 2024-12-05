@@ -1,21 +1,11 @@
-# ElixirFileServer
+# File Server
 
-**TODO: Add description**
+A simple file server for my personal use, written in Elixir.
 
-## Installation
+## About
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `elixir_file_server` to your list of dependencies in `mix.exs`:
+This was written as a personal project to host image files for [PlantID Discord Bot](https://github.com/TheRealOwenRees/plantID_discordbot), due to the changes in how Discord cache their images.
 
-```elixir
-def deps do
-  [
-    {:elixir_file_server, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/elixir_file_server>.
-
+- Written in Elixir
+- Web server utilises [Cowboy](https://github.com/ninenines/cowboy)
+- Conversion of images to jpeg format with [Image](https://github.com/elixir-image/image)
