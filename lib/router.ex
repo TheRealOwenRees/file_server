@@ -63,6 +63,13 @@ defmodule FileServer.Router do
   end
 
   delete "/plant_id/:file" do
+    authorization = Plug.Conn.get_req_header(conn, "authorization") |> List.first()
+
+    if authorization != @authorization_key do
+      conn
+      |> send_resp(401, "Unauthorized")
+    end
+
     response =
       conn.params["file"]
       |> FileServer.PlantId.delete_image()
