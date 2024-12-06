@@ -9,7 +9,7 @@ defmodule FileServer.Application do
   def start(_type, _args) do
     children = [
       # Starts a worker by calling: FileServer.Worker.start_link(arg)
-      # {ElixirFileServer.Worker, arg}
+      # {FileServer.Worker, arg}
       {Plug.Cowboy, scheme: :http, plug: FileServer, options: [port: 4321]}
     ]
 
